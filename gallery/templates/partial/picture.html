@@ -9,6 +9,8 @@
             <p class="card-picture-description">About: {{ picture.description }}</p>
             <p class="card-picture-description">Author: {{ picture.author }}</p>
             <p class="card-picture-description">Created at: {{ picture.created_at }}</p>
+            <a href="{% url 'detailed' picture.pk %}" class="btn btn-primary">view</a>
+            <a href="{% url 'picture_update' picture.pk %}" class="btn btn-primary">update</a>
         </div>
     </div>
 </div>

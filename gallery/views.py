@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from gallery.forms import PictureForm
 from gallery.models import Picture
@@ -38,6 +39,18 @@ class AddNewPicture(CreateView):
             description = form.cleaned_data.get("description")
             Picture.objects.create(image=image, author=author, description=description)
             return redirect("index")
+
+
+class UpdatePicture(UpdateView):
+    form_class = PictureForm
+    model = Picture
+    template_name = "picture/update.html"
+
+    def get_success_url(self):
+        return reverse("index")
+
+
+
 
 
 
