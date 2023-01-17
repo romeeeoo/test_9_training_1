@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+    <form method="post" >
+        {% csrf_token %}
+        <h3>Delete this picture?</h3>
+        <input class="btn btn-outline-danger mb-3" type="submit" value="YES">
+    </form>
+
+
+    {% include "partial/picture.html" %}
+
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 {%  block content %}
 {% include "partial/picture.html" %}
+    <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
     {% for account in picture_favoured_by %}
       <p class="mt-4">
           <a href="#">here will be users who liked</a>

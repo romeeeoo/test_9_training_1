@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from gallery.forms import PictureForm
 from gallery.models import Picture
 
@@ -47,7 +46,13 @@ class UpdatePicture(UpdateView):
     template_name = "picture/update.html"
 
     def get_success_url(self):
-        return reverse("index")
+        return reverse("detailed", kwargs={"pk": self.object.pk})
+
+
+class DeletePicture(DeleteView):
+    template_name = "picture/confirm_delete.html"
+    model = Picture
+    success_url = reverse_lazy("index")
 
 
 
