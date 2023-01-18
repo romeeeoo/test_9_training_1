@@ -53,11 +53,3 @@ class DeletePicture(DeleteView):
     template_name = "picture/confirm_delete.html"
     model = Picture
     success_url = reverse_lazy("index")
-
-
-
-
-
-
-
-
