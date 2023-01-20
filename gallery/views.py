@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -40,7 +41,7 @@ class AddNewPicture(CreateView):
             return redirect("index")
 
 
-class UpdatePicture(UpdateView):
+class UpdatePicture(LoginRequiredMixin, UpdateView):
     form_class = PictureForm
     model = Picture
     template_name = "picture/update.html"

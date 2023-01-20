@@ -30,7 +30,7 @@
                         </li>
                     {% else %}
                         <li>
-                            <a class="nav-link" href="{% url "login" %}">LOGIN</a>
+                            <a class="nav-link" href="{% url "login" %}?next={{ request.get_full_path }}">LOGIN</a>
                         </li>
                     {% endif %}
                 </ul>

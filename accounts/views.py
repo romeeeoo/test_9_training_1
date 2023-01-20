@@ -1,22 +1,22 @@
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, CreateView
 
-from accounts.forms import LoginForm
+from accounts.forms import LoginForm, CustomUserCreationForm
 
 
 # Create your views here.
 class LoginView(TemplateView):
     template_name = "login.html"
-    form = LoginForm
+    form_class = LoginForm
 
     def get(self, request, *args, **kwargs):
-        form = self.form()
+        form = self.form_class()
         context = {"form": form}
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form(request.POST)
+        form = self.form_class(request.POST)
         if not form.is_valid():
             return redirect("login")
         username = form.cleaned_data.get("username")
@@ -33,6 +33,16 @@ def logout_view(request):
     return redirect("index")
 
 
+class RegisterView(CreateView):
+    template_name = "user_create.html"
+    form_class = CustomUserCreationForm
 
-
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+        context = {}
+        context["form"] = form
+        return self.render_to_response(context)
 
