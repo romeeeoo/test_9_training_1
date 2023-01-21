@@ -26,7 +26,7 @@ class PictureDetailView(DetailView):
         return context
 
 
-class AddNewPicture(CreateView):
+class AddNewPicture(LoginRequiredMixin, CreateView):
     template_name = "picture/add.html"
     model = Picture
     form_class = PictureForm

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="#" class="btn btn-primary mt-3" role="button">change password</a>
+    <a href="#" class="btn btn-primary mt-3" role="button">edit profile</a>
+    <h1>{{ user_obj.get_full_name |default:user_obj.username }}</h1>
+    <h4>Favorite Pictures</h4>
+    {% for picture in pictures %}
+    {% include "partial/picture.html" %}
+    {% endfor %}
+{% endblock %}

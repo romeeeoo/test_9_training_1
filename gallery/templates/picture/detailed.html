@@ -5,7 +5,7 @@
     <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
     {% for account in picture_favoured_by %}
       <p class="mt-4">
-          <a href="#">here will be users who liked</a>
+          <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
       </p>
     {% endfor %}
 {% endblock %}

@@ -1,6 +1,8 @@
+from audioop import reverse
+
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import redirect
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DetailView
 
 from accounts.forms import LoginForm, CustomUserCreationForm
 
@@ -25,7 +27,16 @@ class LoginView(TemplateView):
         if not user:
             return redirect("login")
         login(request, user)
-        return redirect("index")
+        success_url = self.get_success_url()
+        return redirect(success_url)
+
+    def get_success_url(self):
+        self.next_url = self.request.GET.get('next')
+        if not self.next_url:
+            self.next_url = self.request.POST.get('next')
+        if not self.next_url:
+            self.next_url = reverse('index')
+        return self.next_url
 
 
 def logout_view(request):
@@ -46,3 +57,14 @@ class RegisterView(CreateView):
         context["form"] = form
         return self.render_to_response(context)
 
+
+class UserDetailView(DetailView):
+    model = get_user_model()
+    template_name = "user_detail.html"
+    context_object_name = "user_obj"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        favorite_pictures = self.object.favorite_pictures.all()
+        context["pictures"] = favorite_pictures
+        return context
