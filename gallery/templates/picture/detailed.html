@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
-{%  block content %}
-{% include "partial/picture.html" %}
-    <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
+{% block content %}
+    {% include "partial/picture.html" %}
+    {% if perms.gallery.delete_picture or picture.author == request.user %}
+        <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
+    {% endif %}
     {% for account in picture_favoured_by %}
-      <p class="mt-4">
-          <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
-      </p>
+        <p class="mt-4">
+            <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
+        </p>
     {% endfor %}
 {% endblock %}
