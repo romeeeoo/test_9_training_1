@@ -13,6 +13,11 @@ class PicturesView(ListView):
     context_object_name = "pictures"
     ordering = ("-created_at",)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_favorite"] = self.request.user.favorite_pictures.all()
+        return context
+
 
 class PictureDetailView(DetailView):
     template_name = "picture/detailed.html"
@@ -23,6 +28,7 @@ class PictureDetailView(DetailView):
         picture = self.object
         picture_favoured_by = picture.favored_by.all()
         context["picture_favoured_by"] = picture_favoured_by
+        context["user_favorite"] = self.request.user.favorite_pictures.all()
         return context
 
 

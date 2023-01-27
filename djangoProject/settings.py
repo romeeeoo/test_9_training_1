@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gallery',
     'django_bootstrap5',
-    'accounts'
+    'accounts',
+    'api',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -123,6 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = "/uploads/"
