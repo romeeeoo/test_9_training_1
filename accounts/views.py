@@ -1,7 +1,6 @@
-from audioop import reverse
-
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import TemplateView, CreateView, DetailView
 
 from accounts.forms import LoginForm, CustomUserCreationForm
@@ -32,10 +31,12 @@ class LoginView(TemplateView):
 
     def get_success_url(self):
         self.next_url = self.request.GET.get('next')
+        print("1", self.next_url)
         if not self.next_url:
             self.next_url = self.request.POST.get('next')
         if not self.next_url:
             self.next_url = reverse('index')
+            print("3", self.next_url)
         return self.next_url
 
 

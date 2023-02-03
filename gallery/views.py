@@ -15,7 +15,8 @@ class PicturesView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_favorite"] = self.request.user.favorite_pictures.all()
+        if self.request.user.is_authenticated:
+            context["user_favorite"] = self.request.user.favorite_pictures.all()
         return context
 
 
@@ -28,7 +29,8 @@ class PictureDetailView(DetailView):
         picture = self.object
         picture_favoured_by = picture.favored_by.all()
         context["picture_favoured_by"] = picture_favoured_by
-        context["user_favorite"] = self.request.user.favorite_pictures.all()
+        if self.request.user.is_authenticated:
+            context["user_favorite"] = self.request.user.favorite_pictures.all()
         return context
 
 
