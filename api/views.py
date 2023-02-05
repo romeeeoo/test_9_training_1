@@ -1,4 +1,3 @@
-from rest_framework import viewsets, authentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -28,11 +27,5 @@ class FavouriteApiView(APIView):
             return Response(status=201)
 
 
-# class FavouriteApiView(viewsets.ModelViewSet):
-#     pass
-
-
-
-
-
-
+class CreateCommentApiView(APIView):
+    pass

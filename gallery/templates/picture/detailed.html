@@ -10,4 +10,9 @@
             <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
         </p>
     {% endfor %}
+    {% for comment in picture.comments.all %}
+        <p>{{ comment.author }}</p>
+        <p>{{ comment.text }}</p>
+        <p>{{ comment.datetime_created }}</p>
+    {% endfor %}
 {% endblock %}
