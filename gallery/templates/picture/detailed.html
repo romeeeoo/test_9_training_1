@@ -10,9 +10,18 @@
             <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
         </p>
     {% endfor %}
+    {% if user.is_authenticated %}
+        <form action="{% url 'create_comment' %}">
+            {% csrf_token %}
+            <input type="text" class="comment_text">
+            <input type="submit" value="comment" class="comment_submit">
+        </form>
+    {% endif %}
     {% for comment in picture.comments.all %}
         <p>{{ comment.author }}</p>
         <p>{{ comment.text }}</p>
         <p>{{ comment.datetime_created }}</p>
     {% endfor %}
+
+
 {% endblock %}

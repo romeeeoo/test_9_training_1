@@ -1,5 +1,5 @@
 <div class="col-md-6 col-sm-12 col-lg-3">
-    <div class="card">
+    <div class="card" data-pictureId="{{ picture.pk }}">
         <div class="container col-10 mt-5 mb-5">
             {% if picture.image %}
                 <img class="card-img-top picture-image" src="{{ picture.image.url }}" alt="{{ picture }}">

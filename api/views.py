@@ -1,7 +1,13 @@
+import datetime
+
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.serializers import CommentSerializer
 from gallery.models import Picture
 
 
@@ -28,4 +34,22 @@ class FavouriteApiView(APIView):
 
 
 class CreateCommentApiView(APIView):
-    pass
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        picture_id = data.get("picture_id")
+        text = data.get("text")
+        author_id = request.user.pk
+        serializer = CommentSerializer(
+            data={
+                "text": text,
+                "picture": picture_id,
+                "author": author_id,
+                "datetime_created": datetime.datetime.now()
+            })
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=201)
+        print(serializer.errors)
+        return Response(status=500)
