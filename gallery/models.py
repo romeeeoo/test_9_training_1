@@ -12,6 +12,9 @@ class Picture(models.Model):
 
 
 class Comment(models.Model):
+    class Meta:
+        ordering = ("-datetime_created",)
+
     text = models.TextField(
         blank=False,
         null=False,

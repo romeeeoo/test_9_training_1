@@ -1,28 +1,36 @@
 <div class="new_comments">
-{% extends "base.html" %}
+    {% extends "base.html" %}
 
-{% block content %}
-    {% include "partial/picture.html" %}
-    {% if perms.gallery.delete_picture or picture.author == request.user %}
-        <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
-    {% endif %}
-    {% for account in picture_favoured_by %}
-        <p class="mt-4">
-            <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
-        </p>
-    {% endfor %}
-    {% if user.is_authenticated %}
-        <form action="{% url 'create_comment' %}">
-            {% csrf_token %}
-            <input type="text" class="comment_text">
-            <input type="submit" value="comment" class="comment_submit">
-        </form>
-    {% endif %}
-    {% for comment in picture.comments.all %}
-        <p>{{ comment.author }}</p>
-        <p>{{ comment.text }}</p>
-        <p>{{ comment.datetime_created }}</p>
-    {% endfor %}
+    {% block content %}
+        {% include "partial/picture.html" %}
+        {% if perms.gallery.delete_picture or picture.author == request.user %}
+            <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
+        {% endif %}
+        {% for account in picture_favoured_by %}
+            <p class="mt-4">
+                <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
+            </p>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'comment-list' %}">
+                {% csrf_token %}
+                <input type="text" class="comment_text">
+                <button type="button" class="comment_submit">comment</button>
+            </form>
+        {% endif %}
 
-{% endblock %}
+        {% for comment in picture.comments.all %}
+            <div>
+                <p>{{ comment.author }}</p>
+                <p>{{ comment.text }}</p>
+                <p>{{ comment.datetime_created }}</p>
+                <form action="{% url 'comment-detail' comment.pk %}">
+                    {% csrf_token %}
+                    <input type="button" value="delete comment" class="delete_submit" id="{{ comment.pk }}"
+                           data-comment-id="{{ comment.pk }}">
+                </form>
+            </div>
+
+        {% endfor %}
+    {% endblock %}
 </div>
