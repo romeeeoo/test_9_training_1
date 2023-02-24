@@ -3,3 +3,6 @@ uploads
 .idea
 __pycache__
 venv
+*.DS_Store
+
+

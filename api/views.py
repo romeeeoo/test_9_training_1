@@ -1,11 +1,12 @@
 import datetime
 
-from django.contrib.auth.mixins import UserPassesTestMixin
+# from django.contrib.auth.mixins import UserPassesTestMixin
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.permissions import DeleteCommentPermission
 from api.serializers import CommentSerializer
 from gallery.models import Picture, Comment
 
@@ -56,7 +57,7 @@ class CreateCommentApiView(APIView):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, DeleteCommentPermission]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 

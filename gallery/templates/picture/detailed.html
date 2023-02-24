@@ -24,11 +24,13 @@
                 <p>{{ comment.author }}</p>
                 <p>{{ comment.text }}</p>
                 <p>{{ comment.datetime_created }}</p>
+                {% if comment.author == user %}
                 <form action="{% url 'comment-detail' comment.pk %}">
                     {% csrf_token %}
                     <input type="button" value="delete comment" class="delete_submit" id="{{ comment.pk }}"
                            data-comment-id="{{ comment.pk }}">
                 </form>
+                {% endif %}
             </div>
 
         {% endfor %}
