@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.permissions import DeleteCommentPermission
-from api.serializers import CommentSerializer
+from api.serializers import CommentSerializer, CommentSerializerGet
 from gallery.models import Picture, Comment
 
 
@@ -63,19 +63,19 @@ class CommentViewSet(viewsets.ModelViewSet):
     def create(self, request,  *args, **kwargs):
         data = request.data
         print(data)
-        picture_id = data.get("picture_id")
-        text = data.get("text")
-        author_id = request.user.pk
         request_data = {
-                "text": text,
-                "picture": picture_id,
-                "author": author_id,
-                "datetime_created": datetime.datetime.now()}
+                "text": data.get("text"),
+                "picture": data.get("picture_id"),
+                "author": request.user.pk,
+                "datetime_created": datetime.datetime.now()
+        }
         serializer = self.get_serializer(data=request_data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        response_serializer = CommentSerializerGet(serializer.instance)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class DeleteCommentApiView(APIView):

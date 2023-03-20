@@ -26,12 +26,23 @@ class PictureFavouredBySerializer(serializers.ModelSerializer):
 #     def create(self, validated_data):
 #         return Comment.objects.create(**validated_data)
 
+
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ("id", "username", "email", "first_name", "last_name")
+        read_only_fields = ("id", "username", "email", "first_name", "last_name")
+
+
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("id", "text", "picture", "author", "datetime_created")
         read_only_fields = ("id",)
 
+
+class CommentSerializerGet(CommentSerializer):
+    author = AuthorSerializer(read_only=True)
 
 
 # class PictureSerializer(serializers.Serializer):

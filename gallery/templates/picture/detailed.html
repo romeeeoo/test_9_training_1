@@ -21,20 +21,23 @@
                 <button type="button" class="comment_submit btn btn-primary mt-2">comment</button>
             </form>
         {% endif %}
-        {% for comment in picture.comments.all %}
-            <div class="card mt-2">
-                <p class="pt-2 ps-2">{{ comment.author }}</p>
-                <p><h6 class="ps-2">{{ comment.text }}</h6></p>
-                <p class="ps-2">{{ comment.datetime_created }}</p>
-                {% if comment.author == user %}
-                <form action="{% url 'comment-detail' comment.pk %}">
-                    {% csrf_token %}
-                    <input type="button" value="delete comment" class=" ms-2 delete_submit btn btn-primary" id="{{ comment.pk }}"
-                           data-comment-id="{{ comment.pk }}">
-                </form>
-                {% endif %}
-            </div>
+        <div class="comments-block" id="commentBlock">
+            {% for comment in picture.comments.all %}
+                <div class="card mt-2" id="commentCard-{{ comment.id }}">
+                    <p class="pt-2 ps-2">{{ comment.author }}</p>
+                    <p><h6 class="ps-2">{{ comment.text }}</h6></p>
+                    <p class="ps-2">{{ comment.datetime_created }}</p>
+                    {% if comment.author == user %}
+                        <form action="{% url 'comment-detail' comment.pk %}">
+                            {% csrf_token %}
+                            <input type="button" value="delete comment" class=" ms-2 delete_submit btn btn-primary"
+                                   id="{{ comment.pk }}"
+                                   data-comment-id="{{ comment.pk }}">
+                        </form>
+                    {% endif %}
+                </div>
 
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% endblock %}
 </div>
