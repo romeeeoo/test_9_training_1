@@ -1,13 +1,14 @@
-console.log(10)
+console.log(1)
 
 $(document).ready(function () {
-    console.log(1)
+    console.log(2)
     let btnFavouriteList = $(`.btn_favourite`)
     let deleteCommentBtnList = $(".delete_submit")
     let commentText = $(".comment_text")
     let commentSubmit = $(".comment_submit")
     let pictureId = $(".card").data("pictureid")
     let detailedUrl = $(".url-detailed").attr("href")
+    console.log(3)
 
 
     for (let btnFavourite of btnFavouriteList) {
@@ -25,9 +26,9 @@ $(document).ready(function () {
                     console.log(status);
                     console.log(4)
                 },
-                error: function (data, response, status) {
+                error: function (response, status) {
                     console.log(status);
-                    console.log(data);
+                    console.log(response);
                 }
             });
         });
@@ -35,7 +36,6 @@ $(document).ready(function () {
 
 
     $(commentSubmit).click(function addComment(event) {
-        console.log("нажали на кнопку")
         let csrfToken = $("input[name='csrfmiddlewaretoken']").attr("value")
         event.preventDefault()
         $.ajax({
@@ -46,13 +46,13 @@ $(document).ready(function () {
             success: function (data, status) {
                 console.log(data);
                 console.log(status);
-                $(".new_comments").load(detailedUrl);
                 console.log(5)
-
+                $(".new_comments").load(detailedUrl);
+                console.log(6)
             },
-            error: function (data, response, status) {
+            error: function (response, status) {
                 console.log(status);
-                console.log(data);
+                console.log(response);
             }
         });
     })
@@ -74,19 +74,15 @@ $(document).ready(function () {
                     console.log(status);
                     console.log(6);
                     $(".new_comments").load(detailedUrl);
+                    console.log(8);
                 },
-                error: function (data, response, status) {
+                error: function (response, status) {
                     console.log(status);
-                    console.log(data);
+                    console.log(response);
                 }
             });
         })
 
     }
-    console.log(2)
-
+    console.log(9)
 })
-
-
-
-

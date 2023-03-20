@@ -2,32 +2,34 @@
     {% extends "base.html" %}
 
     {% block content %}
-        {% include "partial/picture.html" %}
+        {% include "partial/detailed_picture_card.html" %}
         {% if perms.gallery.delete_picture or picture.author == request.user %}
             <a href="{% url "picture_delete" picture.pk %}" class="btn btn-primary mt-3" role="button">Delete?</a>
         {% endif %}
+        <h3 class="mt-5">Favored By:</h3>
         {% for account in picture_favoured_by %}
             <p class="mt-4">
                 <a href="{% url "user_detailed" account.pk %}"> {{ account.get_full_name|default:account.username }}</a>
             </p>
         {% endfor %}
+        <h3 class="pt-2 pb-2">Comments:</h3>
         {% if user.is_authenticated %}
             <form action="{% url 'comment-list' %}">
                 {% csrf_token %}
-                <input type="text" class="comment_text">
-                <button type="button" class="comment_submit">comment</button>
+                <label for="commentInput" class="form-label">Enter your comment</label>
+                <input type="text" class="comment_text form-control" id="commentInput">
+                <button type="button" class="comment_submit btn btn-primary mt-2">comment</button>
             </form>
         {% endif %}
-
         {% for comment in picture.comments.all %}
-            <div>
-                <p>{{ comment.author }}</p>
-                <p>{{ comment.text }}</p>
-                <p>{{ comment.datetime_created }}</p>
+            <div class="card mt-2">
+                <p class="pt-2 ps-2">{{ comment.author }}</p>
+                <p><h6 class="ps-2">{{ comment.text }}</h6></p>
+                <p class="ps-2">{{ comment.datetime_created }}</p>
                 {% if comment.author == user %}
                 <form action="{% url 'comment-detail' comment.pk %}">
                     {% csrf_token %}
-                    <input type="button" value="delete comment" class="delete_submit" id="{{ comment.pk }}"
+                    <input type="button" value="delete comment" class=" ms-2 delete_submit btn btn-primary" id="{{ comment.pk }}"
                            data-comment-id="{{ comment.pk }}">
                 </form>
                 {% endif %}

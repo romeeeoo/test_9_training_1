@@ -23,7 +23,6 @@ class FavouriteApiView(APIView):
         picture = Picture.objects.get(pk=picture_id)
         print(picture)
         if request.user.favorite_pictures.filter(pk=picture_id):
-            print("picture to be removed")
             request.user.favorite_pictures.remove(picture)
             print("picture removed from favourite")
             return Response(status=203)

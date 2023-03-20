@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    {% for picture in pictures %}
-    {% include "partial/picture.html" %}
-    {% endfor %}
-</div>
+    <div class="row">
+        {% for picture in pictures %}
+            {% include "partial/picture.html" %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

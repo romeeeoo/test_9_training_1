@@ -1,4 +1,4 @@
-<div class="col-md-6 col-sm-12 col-lg-3">
+<div class="col-md-12 col-sm-12 col-lg-12">
     <div class="card" data-pictureId="{{ picture.pk }}">
         <div class="container col-10 mt-5 mb-5">
             {% if picture.image %}
@@ -9,18 +9,18 @@
             <p class="card-picture-description">About: {{ picture.description }}</p>
             <p class="card-picture-description">Author: {{ picture.author }}</p>
             <p class="card-picture-description">Created at: {{ picture.created_at }}</p>
-            <a href="{% url 'detailed' picture.pk %}" class="btn btn-primary url-detailed">view</a>
+            <a hidden href="{% url 'detailed' picture.pk %}" class="btn btn-primary url-detailed"></a>
             {% if perms.gallery.change_picture or picture.author == request.user %}
-                <a href="{% url 'picture_update' picture.pk %}" class="btn btn-primary">update</a>
+                <a href="{% url 'picture_update' picture.pk %}" class="btn btn-primary mb-2">update</a>
             {% endif %}
             {% if user.is_authenticated %}
                 <form method="POST" class="form_favourite" action="{% url 'toggle_favorite' %}">
                     {% csrf_token %}
                     {% if picture in user_favorite %}
-                        <button type="submit" class="btn btn-dark btn_favourite mt-2" id="{{ picture.pk }}">Favourite
+                        <button type="submit" class="btn btn-dark btn_favourite" id="{{ picture.pk }}">Favourite
                         </button>
                     {% else %}
-                        <button type="submit" class="btn btn-outline-dark btn_favourite mt-2" id="{{ picture.pk }}">Favourite
+                        <button type="submit" class="btn btn-outline-dark btn_favourite" id="{{ picture.pk }}">Favourite
                         </button>
                     {% endif %}
                 </form>
