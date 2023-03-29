@@ -32,27 +32,27 @@ class FavouriteApiView(APIView):
             return Response(status=201)
 
 
-class CreateCommentApiView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        print(request.data)
-        picture_id = data.get("picture_id")
-        text = data.get("text")
-        author_id = request.user.pk
-        serializer = CommentSerializer(
-            data={
-                "text": text,
-                "picture": picture_id,
-                "author": author_id,
-                "datetime_created": datetime.datetime.now()
-            })
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=201)
-        print(serializer.errors)
-        return Response(status=500)
+# class CreateCommentApiView(APIView):
+#     permission_classes = [IsAuthenticated]
+#
+#     def post(self, request, *args, **kwargs):
+#         data = request.data
+#         print(request.data)
+#         picture_id = data.get("picture_id")
+#         text = data.get("text")
+#         author_id = request.user.pk
+#         serializer = CommentSerializer(
+#             data={
+#                 "text": text,
+#                 "picture": picture_id,
+#                 "author": author_id,
+#                 "datetime_created": datetime.datetime.now()
+#             })
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(status=201)
+#         print(serializer.errors)
+#         return Response(status=500)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -78,14 +78,14 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Response(response_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class DeleteCommentApiView(APIView):
-    def delete(self, request, *args, **kwargs):
-        data = request.data
-        comment_id = data.get("comment_id")
-        comment = Comment.objects.filter(pk=comment_id)
-        if comment:
-            comment.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+# class DeleteCommentApiView(APIView):
+#     def delete(self, request, *args, **kwargs):
+#         data = request.data
+#         comment_id = data.get("comment_id")
+#         comment = Comment.objects.filter(pk=comment_id)
+#         if comment:
+#             comment.delete()
+#             return Response(status=status.HTTP_204_NO_CONTENT)
+#         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

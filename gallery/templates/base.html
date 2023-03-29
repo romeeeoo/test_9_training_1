@@ -7,17 +7,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <title>{% block title %} gallery {% endblock %}</title>
-
 </head>
 <body>
 {% block menu %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url "index" %}">Gallery</a>
-{#            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"#}
-{#                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">#}
-{#                <span class="navbar-toggler-icon"></span>#}
-{#            </button>#}
+            {#            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"#}
+            {#                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">#}
+            {#                <span class="navbar-toggler-icon"></span>#}
+            {#            </button>#}
             <div class="" id="navbarNav">
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
@@ -31,12 +30,23 @@
                             <a class="nav-link" href="{% url "logout" %}">LOGOUT</a>
                         </li>
                     {% else %}
-                        <li>
-                            <a class="nav-link" href="{% url "login" %}?next={{ request.get_full_path }}">LOGIN</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{% url "register" %}"></a>
-                        </li>
+                        {% url 'login' as login_url %}
+                        {% url 'register' as register_url %}
+                        {%  if login_url in request.get_full_path or register_url in request.get_full_path %}
+                            <li>
+                                <a class="nav-link" href="{% url "login" %}">LOGIN</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{% url "register" %}">REGISTER</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a class="nav-link" href="{% url "login" %}?next={{ request.get_full_path }}">LOGIN</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{% url "register" %}?next={{ request.get_full_path }}">REGISTER</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
             </div>

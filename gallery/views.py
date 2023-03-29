@@ -47,6 +47,7 @@ class AddNewPicture(LoginRequiredMixin, CreateView):
             description = form.cleaned_data.get("description")
             Picture.objects.create(image=image, author=author, description=description)
             return redirect("index")
+        return redirect("index")
 
 
 class UpdatePicture(UserPassesTestMixin, UpdateView):
